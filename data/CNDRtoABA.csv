@@ -1,0 +1,211 @@
+Figure,Region,Full name,Designation,ABA
+4,1,Secondary motor area,iMOs,MOs
+4,2,Orbital area,iORB,"ORBm, ORBvl, ORBl"
+4,3,Prelimbic area,iPL,PL
+4,4,Accessory olfactory bulb,iAOB,AOB
+4,5,Main olfactory bulb,iMOB,MOB
+4,6,Secondary motor area,cMOs,MOs
+4,7,Orbital area,cORB,"ORBm, ORBvl, ORBl"
+4,8,Prelimbic area,cPL,PL
+4,9,Accessory olfactory bulb,cAOB,AOB
+4,10,Main olfactory bulb,cMOB,MOB
+13,1,Secondary motor area,iMOs,MOs
+13,2,Primary motor area,iMOp,MOp
+13,3,Agranular insular area,iAI,"AId, AIv"
+13,4,"Anterior cingulate area, dorsal part",iACAd,ACAd
+13,5,Prelimbic area,iPL,PL
+13,6,Infralimbic area,iILA,ILA
+13,7,Orbital area,iORB,"ORBm,ORBvl,ORBl"
+13,8,Olfactory bulb,iOB,"AON,TT"
+13,9,Secondary motor area,cMOs,MOs
+13,10,Primary motor area,cMOp,MOp
+13,11,Agranular insular area,cAI,"AId, AIv"
+13,12,"Anterior cingulate area, dorsal part",cACAd,ACAd
+13,13,Prelimbic area,cPL,PL
+13,14,Infralimbic area,cILA,ILA
+13,15,Orbital area,cORB,"ORBm,ORBvl,ORBl"
+13,16,Olfactory bulb,cOB,"AON,TT"
+23,1,Anterior cingulate area,iACA,"ACAd,ACAv"
+23,2,Secondary motor area,iMOs,MOs
+23,3,Primary motor area,iMOp,MOp
+23,4,"Primary somatosensory area, mouth",iSSp-m,SSp-m
+23,5,Supplemental somatosensory area,iSSs,SSs
+23,6,Gustatory areas,iGU,GU
+23,7,Agranular insular area,iAIp,AIp
+23,8,Claustrum,iCLA,CLA
+23,9,"Endopiriform nucleus,dorsal part",iEPd,EPd
+23,10,Piriform area,iPIR,PIR
+23,11,Caudoputamen,iCP,CP
+23,12,Lateral septal nucleus,iLS,"LSc,LSr,LSv"
+23,13,Media septal nucleus,iMS,"MS,NDB"
+23,14,Nucleus accumbens,iACB,ACB
+23,15,Substantia innominata,iSI,SI
+23,16,Olfactory tubercle,iOT,OT
+23,19,Anterior cingulate area,cACA,"ACAd,ACAv"
+23,20,Secondary motor area,cMOs,MOs
+23,21,Primary motor area,cMOp,MOp
+23,22,"Primary somatosensory area, mouth",cSSp-m,SSp-m
+23,23,Supplemental somatosensory area,cSSs,SSs
+23,24,Gustatory areas,cGU,GU
+23,25,Agranular insular area,cAIp,AIp
+23,26,Claustrum,cCLA,CLA
+23,27,"Endopiriform nucleus,dorsal part",cEPd,EPd
+23,28,Piriform area,cPIR,PIR
+23,29,Caudoputamen,cCP,CP
+23,30,Lateral septal nucleus,cLS,"LSc,LSr,LSv"
+23,31,Media septal nucleus,cMS,"MS,NDB"
+23,32,Nucleus accumbens,cACB,ACB
+23,33,Substantia innominata,cSI,SI
+23,34,Olfactory tubercle,cOT,OT
+41,1,Retrosplenial area,iRSP,"RSPv,RSPd,RSPagl"
+41,2,"Primary somatosensory area, barrel field",iSSp-bfd,"SSp-ll, SSp-tr, SSp-bfd, SSp-ul"
+41,3,Secondary somatosensory area,iSSs,SSs
+41,4,Visceral Area,iVISC,VISC
+41,5,"Agranular insular area, posterior part",iAIp,AIp
+41,6,Endopiriform nucleus,iEP,"EPd,EPv"
+41,7,Piriform area,iPIR,PIR
+41,8,Field CA1,iCA1,CA1
+41,9,Field CA2,iCA2,CA2
+41,10,Field CA3,iCA3,CA3
+41,11,Dentate gyrus,iDG,DG
+41,12,Lateral dorsal nucleus of thalmus,iLD,LD
+41,13,Mediodorsal nucleus of thalamus,iMD,"MH, LH, PVT, IMD, MD, CM"
+41,14,Ventral nucleus of thalamus,iVAL,"VAL, VPM, VM, VPL, RT"
+41,15,Submedial nucleus of the thalamus,iSMT,"RH, SMT, RE"
+41,16,Hypothalamic area,iHY,"LHA, VMH, AHN, TU"
+41,17,Caudoputamen,iCP,CP
+41,18,Globus pallidus,iGP,"GPe, GPi"
+41,19,Central amygdalar nucleus,iCEA,CEA
+41,20,Basolateral amygdalar nucleus,iBLAa,"BLA, LA"
+41,21,Medial amygdalar nucleus,iMEA,MEA
+41,22,"Basomedial amygdalar nucleus, anterior part",iBMA,BMA
+41,23,"Cortical amygdalar area, anterior part",iCOAa,COAa
+41,27,Retrosplenial area,cRSP,"RSPv,RSPd,RSPagl"
+41,28,"Primary somatosensory area, barrel field",cSSp-bfd,"SSp-ll, SSp-tr, SSp-bfd, SSp-ul"
+41,29,Secondary somatosensory area,cSSs,SSs
+41,30,Visceral Area,cVISC,VISC
+41,31,"Agranular insular area, posterior part",cAIp,AIp
+41,32,Endopiriform nucleus,cEP,"EPd,EPv"
+41,33,Piriform area,cPIR,PIR
+41,34,Field CA1,cCA1,CA1
+41,35,Field CA2,cCA2,CA2
+41,36,Field CA3,cCA3,CA3
+41,37,Dentate gyrus,cDG,DG
+41,38,Lateral dorsal nucleus of thalmus,cLD,LD
+41,39,Mediodorsal nucleus of thalamus,cMD,"MH, LH, PVT, IMD, MD, CM"
+41,40,Ventral nucleus of thalamus,cVAL,"VAL, VPM, VM, VPL, RT"
+41,41,Submedial nucleus of the thalamus,cSMT,"RH, SMT, RE"
+41,42,Hypothalamic area,cHY,"LHA, VMH, AHN, TU"
+41,43,Caudoputamen,cCP,CP
+41,44,Globus pallidus,cGP,"GPe, GPi"
+41,45,Central amygdalar nucleus,cCEA,CEA
+41,46,Basolateral amygdalar nucleus,cBLAa,"BLA, LA"
+41,47,Medial amygdalar nucleus,cMEA,MEA
+41,48,"Basomedial amygdalar nucleus, anterior part",cBMA,BMA
+41,49,"Cortical amygdalar area, anterior part",cCOAa,COAa
+55,1,Retrosplenial area,iRSP,"RSPv,RSPd,RSPagl"
+55,2,"Visual area, anterior",iVISa,"VISam,VISp,VISal,VISpm"
+55,3,Auditory area,iAUD,"AUDd,AUDp,AUDv"
+55,4,Temporal association areas,iTEa,TEa
+55,5,Ectrorhinal area,iECT,ECT
+55,6,Perirhinal area,iPERI,PERI
+55,7,"Entorhinal area, lateral part",iENTl,ENTl
+55,8,"Basolateral amygdalar nucleus, posterior part",iBLAp,"BLA,BMA,PA"
+55,9,Piriform area,iPIR,PIR
+55,10,Postpiriform transition area,iTR,TR
+55,11,"Cortical amygdalar area, posterior part",iCOAp,COAp
+55,12,Subiculum,iSUB,SUBd
+55,13,Field CA1,iCA1,CA1
+55,14,Field CA2,iCA2,CA2
+55,15,Field CA3,iCA3,CA3
+55,16,Dentate gyrus,iDG,DG
+55,17,Pretectal area,iPT,"NOT, MPT"
+55,18,Periacqueductal gray,iPAG,PAG
+55,19,Deep mesencephalic area,iDpM,"NPC, APN, MRN"
+55,20,Posterior thalamus,iTHp,"LP, PO, MGd, MGm, MGv, SPFp, LGd, LGv"
+55,21,Zona incerta,iZI,ZI
+55,22,Ventral tegmental area,iVTA,VTA
+55,23,Substantia nigra,iSN,"SNc, SNr"
+55,24,Supramammillary nucleus,iSUM,SUM
+55,25,Mammillary nucleus,iMM,MM
+55,28,Retrosplenial area,cRSP,"RSPv,RSPd,RSPagl"
+55,29,"Visual area, anterior",cVISa,"VISam,VISp,VISal,VISpm"
+55,30,Auditory area,cAUD,"AUDd,AUDp,AUDv"
+55,31,Temporal association areas,cTEa,TEa
+55,32,Ectrorhinal area,cECT,ECT
+55,33,Perirhinal area,cPERI,PERI
+55,34,"Entorhinal area, lateral part",cENTl,ENTl
+55,35,"Basolateral amygdalar nucleus, posterior part",cBLAp,"BLA,BMA,PA"
+55,36,Piriform area,cPIR,PIR
+55,37,Postpiriform transition area,cTR,TR
+55,38,"Cortical amygdalar area, posterior part",cCOAp,COAp
+55,39,Subiculum,cSUB,SUBd
+55,40,Field CA1,cCA1,CA1
+55,41,Field CA2,cCA2,CA2
+55,42,Field CA3,cCA3,CA3
+55,43,Dentate gyrus,cDG,DG
+55,44,Pretectal area,cPT,"NOT, MPT"
+55,45,Periacqueductal gray,cPAG,PAG
+55,46,Deep mesencephalic area,cDpM,"NPC, APN, MRN"
+55,47,Posterior thalamus,cTHp,"LP, PO, MGd, MGm, MGv, SPFp, LGd, LGv"
+55,48,Zona incerta,cZI,ZI
+55,49,Ventral tegmental area,cVTA,VTA
+55,50,Substantia nigra,cSN,"SNc, SNr"
+55,51,Supramammillary nucleus,cSUM,SUM
+55,52,Mammillary nucleus,cMM,MM
+60,1,Retrosplenial area,iRSP,"RSPv,RSPd,RSPagl"
+60,2,"Visual area, posterior",iVISp,"VISp,VISpm,VISl"
+60,3,Auditory area,iAUD,"AUDd,AUDp,AUDv"
+60,4,Temporal association areas,iTEa,TEa
+60,5,Ectrorhinal area,iECT,ECT
+60,6,Perirhinal area,iPERI,PERI
+60,7,"Entorhinal area, lateral part",iENTl,ENTl
+60,8,Subiculum,iSUB,"POST,SUBd,SUBv"
+60,9,Field CA1,iCA1,CA1
+60,10,Field CA2,iCA3,CA3
+60,11,Dentate gyrus,iDG,DG
+60,12,Superior colliculus,iSC,"SCm,SCs"
+60,13,Periacqueductal gray,iPAG,PAG
+60,14,Midbrain reticular nucleus,iMRN,"MRN,RN"
+60,15,Posterior thalamus,iTHp,"POL,MGd,MGm,MGv,PP"
+60,16,Interpeduncular nucleus,iIP,IP
+60,17,Ventral tegmental area,iVTA,VTA
+60,18,Substantia nigra,iSN,"SNc, SNr"
+60,21,Retrosplenial area,cRSP,"RSPv,RSPd,RSPagl"
+60,22,"Visual area, posterior",cVISp,"VISp,VISpm,VISl"
+60,23,Auditory area,cAUD,"AUDd,AUDp,AUDv"
+60,24,Temporal association areas,cTEa,TEa
+60,25,Ectrorhinal area,cECT,ECT
+60,26,Perirhinal area,cPERI,PERI
+60,27,"Entorhinal area, lateral part",cENTl,ENTl
+60,28,Subiculum,cSUB,"POST,SUBd,SUBv"
+60,29,Field CA1,cCA1,CA1
+60,30,Field CA2,cCA3,CA3
+60,31,Dentate gyrus,cDG,DG
+60,32,Superior colliculus,cSC,"SCm,SCs"
+60,33,Periacqueductal gray,cPAG,PAG
+60,34,Midbrain reticular nucleus,cMRN,"MRN,RN"
+60,35,Posterior thalamus,cTHp,"POL,MGd,MGm,MGv,PP"
+60,36,Interpeduncular nucleus,cIP,IP
+60,37,Ventral tegmental area,cVTA,VTA
+60,38,Substantia nigra,cSN,"SNc, SNr"
+68,1,Retrosplenial area,iRSP,"RSPd,RSPagl"
+68,2,"Visual area, posterior",iVISp,"VISp,VISl"
+68,3,"Entorhinal area, lateral part",iENTl,ENTl
+68,4,Parasubiculum,iPAR,PAR
+68,5,Presubiculum,iPRE,PRE
+68,6,Postsubiculum,iPOST,POST
+68,7,Superior colliculus,iSC,"SCs, SCm"
+68,8,Periacqueductal gray,iPAG,PAG
+68,9,Midbrain reticular nucleus,iMRN,"ICe, CUN, MRN"
+68,10,Pontine reticular nucleus,iPRN,"PRNr, TRN, CS"
+68,13,Retrosplenial area,cRSP,"RSPd,RSPagl"
+68,14,"Visual area, posterior",cVISp,"VISp,VISl"
+68,15,"Entorhinal area, lateral part",cENTl,ENTl
+68,16,Parasubiculum,cPAR,PAR
+68,17,Presubiculum,cPRE,PRE
+68,18,Postsubiculum,cPOST,POST
+68,19,Superior colliculus,cSC,"SCs, SCm"
+68,20,Periacqueductal gray,cPAG,PAG
+68,21,Midbrain reticular nucleus,cMRN,"ICe, CUN, MRN"
+68,22,Pontine reticular nucleus,cPRN,"PRNr, TRN, CS"
