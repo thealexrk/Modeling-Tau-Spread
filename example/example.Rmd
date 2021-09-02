@@ -1,0 +1,210 @@
+---
+title: "Tutorial for network spreading models in neurodegeneration"
+author: "Eli Cornblath"
+date: "1/15/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Getting Started
+
+You will need to visit [my github repository](https://www.github.com/ejcorn/tau-spread) for our most recent paper and download at minimum:
+
+* the `code` folder
+* the `example` folder
+  
+Let's start by loading the necessary packages
+
+```{r packages, warning=FALSE,message=FALSE,error=FALSE}
+
+# load packages
+source('packages.R') # see for all of the dependent packages
+```
+
+## Background on linear diffusion models of neurodegenerative disease
+
+In order to implement a linear diffusion model, we will start with the equation
+$$\frac{dx}{dt}=-Lx.$$
+This equation describes a *continous, linear time-invariant system* in which the rate of change in the $n\times1$ vector $x$, sometimes represented as $\dot{x}$, is equal to the $n\times n$ matrix $L$ multiplied by $x$. In the context of modeling spread of misfolded proteins in neurodegenerative disease, there are 3 key components that enter this equation:
+
+* $W$: $n\times n$ connectivity matrix specifying the strength of anatomical connectivity between all pairwise combinations of the $n$ brain regions. $W$ is oriented such that the $ij$^th^ element of $W$ contains the strength of the projection from the brain region in row $i$ to the brain region in column $j$.
+* $x$: $n\times 1$ vector specifying the amount of pathology in each of the $n$ brain regions
+* $t$: time. The values of time are arbitrary, because the units of W don't have time in them. With Allen Brain data, the units of W are some sort of normalized fluorescence intensity, not 1/months.
+
+Working with these values, we can compute the $L$, which is the graph Laplacian of $W$ as
+
+$$L = D - W$$
+where $D$ is a matrix of zeros with the row sums of $W$ along the diagonal. By using $L$ instead of $W$, 
+
+The equation $\frac{dx}{dt}=-Lx$ tells us about the rate of change of pathology at each brain region as a function of the current levels of pathology in the brain; however, we are often more interested in forecasting the future spread of pathology throughout the brain as a function of time. Thus, we can integrate $\frac{dx}{dt}=-Lx$ to yield
+
+$$x(t) = e^{-Lt}x_o$$
+where $x_o$ is the value of $x$ when $t=0$. By using $L$ instead of $W$, we guarantee that the system is stable, because Laplacian matrices have one eigenmode with an eigenvalue of 0 and an eigenvector consisting of the same constant at every node. 
+
+# Implementing linear diffusion models
+
+Let's start by loading some data.
+
+```{r}
+load('pathdata.RData') # load region names
+W <- readMat('W.mat')$W 
+n <- nrow(W)
+D <- diag(rowSums(W))
+L <- D - W
+```
+
+Now let's inject pathology into the CA1 subregion of the hippocampus.
+
+```{r}
+x0 <- matrix(0, nrow = n,ncol = 1) # initialize x with all 0's. means no pathology in the brain
+injection.site <- c(25) # 27=CA3, 41=DG. can add more injection sites into this vector as in c(25,27,41)
+x0[injection.site] <- 1 # now there is 1 unit of pathology in CA1
+```
+
+Using these variables, we can now simulate $x(t) = e^{-Lt}x_o$.
+
+```{r}
+t.n <- 20 # number of time points
+t.rng <- seq(0,5,length.out = t.n) # define a range of time in a vector. remember, values of time are arbitrary here
+x.t <- matrix(NA, nrow = n, ncol = t.n) # make a matrix to store pathology in whole brain as function of time (x(t))
+
+expm.fxn <- reticulate::import('scipy.linalg')$expm # python's expm function is much faster than R's
+# expm.fxn <- expm # if the python function doesn't work, use this line instead, and perhaps delete some nodes in the system
+
+for(t.idx in 1:length(t.rng)){
+  print(paste(t.idx,'out of',t.n))
+  t. <- t.rng[t.idx]
+  x.t[,t.idx] <- expm.fxn(-L*t.)%*%x0 # %*% is R's notation for matrix multiplication. * does elementwise multiplication
+}
+```
+
+Let's visualize our system and its response to input. In this context, we're visualizing how pathology spreads throughout the brain when it is seeded in CA1.
+
+```{r show_figure1, fig.width = 5, fig.height = 3}
+source('plottingfxns.R') # I will use some helper functions to provide easy visualization
+p <- plot.Xt(x.t,t.rng) + theme(legend.position = 'none') +
+  xlab('time (a.u.)') + ylab('Pathology (a.u.)')
+p
+```
+
+To make this plot a bit less messy, we can select only the regions that receive the most pathology from CA1.
+
+```{r show_figure2, fig.width = 5, fig.height = 3}
+roi.select <- which(rowSums(x.t) > quantile(rowSums(x.t),.95))
+p <- plot.Xt(x.t[roi.select,],t.rng) + theme(legend.position = 'none') +
+  xlab('time (a.u.)') + ylab('Pathology (a.u.)')
+p
+```
+
+We can also print the names of these regions:
+```{r}
+print(region.names[roi.select])
+```
+
+# Fitting a retrograde spreading model
+
+So what about this issue of arbitrary time? How do we identify the "correct" time scale? In a real experiment, we measure pathology at specific time points (e.g. 1, 3, 6 months post injection). There's no reason why the units of $W$ should correspond to our chosen time scale. To adderss this potential mismatch, we modify the equation $x(t) = e^{-Lt}x_o$ to include a time constant $c$:
+
+$$x(t) = e^{-Lct}x_o.$$
+
+Using the observed pathology data, we will infer a value for $c$. Due to technical limitations, we have to incorporate a few steps into this process of inference. Our pathology data is measured in 134 regions that are easy to quantify across several mice using automated image analysis. However, the Allen Brain Institute provides measures of anatomical connectivity between 213 brain regions in each hemisphere (426 regions total). I have written helper functions that convert vectors and matrices of pathology between these two spaces, given the input of a manually derived "key" that matches Allen regions to our custom region set. We termed our custom region set "CNDR space" after the Center for Neurodegenerative Disease Research at Penn. We refer to the Allen Brain Institute region annotations as "ABA space" In general, the CNDR regions are combinations of multiple adjacent Allen regions.
+
+Having explained that aspect of the model fitting process, we take the following steps to fit the time constant $c$. For each possible time constant value:
+
+1. Generate predicted pathology values in ABA space using the equation $x(t) = e^{-Lct}x_o$ where $t$ corresponds to the relevant time points included in the experiment (here, 1, 3, 6, and 9 months post injection).
+2. Convert those predicted values from ABA space to CNDR space.
+3. Compare CNDR space measured pathology to CNDR space predicted pathology. Specifically, we compute the Pearson correlation between actual and predicted pathology for each time point, then average those correlation coefficients with equal weighting across all time points. We then select the time constant $c$ that maximizes this average correlation.
+
+The code below is taken from `code/diffmodel/analyze_retrogradespread.R`. First, we will get the mean pathology for each time point.
+
+```
+tps <- c(1,3,6,9) 
+grp <- 'NTG'
+Mice <- lapply(tps, function(tp) path.data[path.data$Condition == grp & path.data$Month == tp,path.names])
+Grp.mean <- lapply(Mice,function(X) colMeans(X,na.rm = T))
+log.path <- lapply(Grp.mean, function(X) log(X,base=10)) # first, we log transform the pathology data
+```
+
+Next, we'll fit the time scaling parameter $c$ on the average pathology across all mice. See the function `c.CNDRspace.fit` in `misc/fitfxns.R`, which implements the 3 steps described above.
+
+Note that these models don't accurately predict pathology at the injection site. It forecasts pathology decreases over time when in reality local misfolding leads pathology to increase at the injection site. Therefore, we exclude the injection site from model fitting.
+
+One also needs to select a range of possible values for the scaling parameter. Choosing too large of a range will lead to unnecessary exploration of the parameter space. Choosing a coarse range will lead to an imprecise estimate of the time constant. Choosing a limited range may omit the optimal value.
+
+```
+c.rng <- seq(1e-5,0.2,length.out = 50) # can choose the limits
+source('fitfxns.R')
+Xo <- get.Xo(region.names,'iCA1') # seed pathology in CA1
+list[c.Grp,Xt.sweep] <- c.CNDRspace.fit(log.path,tps,L,Xo,c.rng,ABA.to.CNDR.key,excl.inj.CNDR = 'iCA1')
+print(c.Grp) # this is your optimized time constant value
+```
+
+# Computing vulnerability
+
+In our work, we typically define vulnerability as actual - predicted pathology. Positive values indicate a vulnerable region with more pathology than expected; negative values indicate a resilient region with less pathology than expected.
+
+We will use 3 steps below to get vulnerability
+
+1. Compute predicted values using optimal time constant.
+2. Fit a univariate linear regression model at each time point.
+3. Take the residuals of those models to be vulnerability.
+
+```
+# predict pathology using connectivity, identified time constant, and seed
+Xt.Grp <- do.call('cbind',lapply(tps, function(t) 
+  log(quiet(map.ABA.to.CNDR(predict.Lout(L,Xo,c.Grp,t),path.names,ABA.to.CNDR.key)), base = 10))) 
+# combine observed pathology and predicted pathology into one data frame at each time point
+df <- lapply(1:length(tps), function(t) data.frame(path = log.path[[t]], pred = Xt.Grp[,t,drop=FALSE]))
+# fit a linear model at each time point to find deviations between actual and expected
+# note that this method gives you a different intercept at each time point, which could be considered a "global" shift in pathology
+# specific to each time point
+m <- lapply(df, function(df.i) lm(path~pred,data=inf.nan.mask(df.i))) 
+# take residuals of those models to get vulnerability at each time point
+vulnerability <- lapply(m,residuals)
+```
+
+# Fitting a bidirectional spread model
+
+What if pathology spreads in both anterograde and retrograde directions? We can capture a bidirectional, linear spreading process by finding the set of parameters that minimize the error term $\epsilon$ in the equation
+
+$$x = \beta_o + \beta_re^{-c_rL_rt} + \beta_ae^{-c_aL_at} + \epsilon,$$
+
+which has the following components:
+
+*  $L_{r_{ij}} = \left\{ {\begin{array}{*{20}{c}} { - W_{ij}\,{\mathrm{for}}\,i \ne j} \\ {\mathop {\sum }\limits_{j = 1}^N {W}_{ij}\,{\mathrm{for}}\,{i = j}} \end{array}} \right.$, which is the retrograde, out-degree graph Laplacian
+*  $L_{a_{ij}} = \left\{ {\begin{array}{*{20}{c}} { - W^\intercal_{ij}\,{\mathrm{for}}\,i \ne j} \\ {\mathop {\sum }\limits_{j = 1}^N {W^{\intercal}_{ij}}\,{\mathrm{for}}\,{i = j}} \end{array}} \right.$, which is the anterograde, out-degree graph Laplacian
+* $c_r$ is a time constant of retrograde spread
+* $c_a$ is a time constant of anterograde spread
+* $\beta_o$ is an intercept
+* $\beta_a$ and $\beta_r$ are weights for the importance of anterograde and retrograde spread, respectively.
+
+```
+source('optimfxns.R')
+params.opt <- c(0.006070303,0.02223111) # these end up being close to the optimal values
+ctrl <- list(fnscale=-1) # minimize objective function
+
+L.out.retro <- get.Lout(W,rep(1,n.regions.ABA),ant.ret='retro') # compute out-degreee Laplacian for retrograde connectivity only (not weighted by Snca)
+L.out.antero <- get.Lout(W,rep(1,n.regions.ABA),ant.ret='antero') # compute out-degreee Laplacian for anterograde connectivity only (not weighted by Snca)
+
+params.opt.fit <- optim(params.opt,c.CNDRspace.objective,control = ctrl, method = 'L-BFGS-B',lower=c(10e-7,10e-7), # optimization. c's must be > 0
+                        log.path=log.path,tps=tps,L.out.retro=L.out.retro,L.out.antero=L.out.antero,
+                        Xo=Xo,ABA.to.CNDR.key=ABA.to.CNDR.key,fxn =expm.fxn,one.lm=TRUE,excl.inj.CNDR='iCA1') # static inputs
+
+# extract parameters from optim output
+c.Grp.retro <- params.opt.fit$par[1]
+c.Grp.antero <- params.opt.fit$par[2]
+Xt.Grp.retro <- do.call('cbind',lapply(tps, function(t) log(quiet(map.ABA.to.CNDR(predict.Lout(L.out.retro,Xo,c.Grp.retro,t,fxn=expm.fxn),path.names,ABA.to.CNDR.key)),base=10))) # predict pathology using connectivity, time constant, and seed
+Xt.Grp.antero <- do.call('cbind',lapply(tps, function(t) log(quiet(map.ABA.to.CNDR(predict.Lout(L.out.antero,Xo,c.Grp.antero,t,fxn=expm.fxn),path.names,ABA.to.CNDR.key)),base=10))) # predict pathology using connectivity, time constant, and seed
+list[m,e,m.fits,df] <- lm.mask.ant.ret.all(log.path,10^Xt.Grp.retro,10^Xt.Grp.antero) # undo log10 because this function automatically computes it
+
+# display summary of model
+print(summary(lm.beta(m)))
+
+# vulnerability for all regions at each time point is simply residuals of this model
+residuals(m)
+```
+
+Hopefully this tutorial was helpful!! Please contact Eli Cornblath (Eli ~`DOT`~ Cornblath ~`AT`~ pennmedicine.^upenn^.edu) if you have any questions.

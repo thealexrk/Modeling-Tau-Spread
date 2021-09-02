@@ -1,0 +1,36 @@
+\begin{thebibliography}{1}
+
+\bibitem{Henderson2019}
+Michael~X. Henderson, Eli~J. Cornblath, Adam Darwich, Bin Zhang, Hannah Brown,
+  Ronald~J. Gathagan, Raizel~M. Sandler, Danielle~S. Bassett, John~Q.
+  Trojanowski, and Virginia M.~Y. Lee.
+\newblock {Spread of $\alpha$-synuclein pathology through the brain connectome
+  is modulated by selective vulnerability and predicted by network analysis}.
+\newblock {\em Nature Neuroscience}, 22(8):1248--1257, aug 2019.
+
+\bibitem{Mezias2020}
+Christopher Mezias, Nolwen Rey, Patrik Brundin, and Ashish Raj.
+\newblock {Neural connectivity predicts spreading of alpha-synuclein pathology
+  in fibril-injected mouse models: Involvement of retrograde and anterograde
+  axonal propagation}.
+\newblock {\em Neurobiology of Disease}, 134:104623, feb 2020.
+
+\bibitem{Pandya2019}
+S.~Pandya, Y.~Zeighami, B.~Freeze, M.~Dadar, D.~L. Collins, A.~Dagher, and
+  A.~Raj.
+\newblock {Predictive model of spread of Parkinson's pathology using network
+  diffusion}.
+\newblock {\em NeuroImage}, 192:178--194, may 2019.
+
+\bibitem{Pandya2017}
+Sneha Pandya, Chris Mezias, and Ashish Raj.
+\newblock {Predictive Model of Spread of Progressive Supranuclear Palsy Using
+  Directional Network Diffusion.}
+\newblock {\em Frontiers in neurology}, 8:692, 2017.
+
+\bibitem{Raj2012}
+Ashish Raj, Amy Kuceyeski, and Michael Weiner.
+\newblock {A Network Diffusion Model of Disease Progression in Dementia}.
+\newblock {\em Neuron}, 73(6):1204--1215, mar 2012.
+
+\end{thebibliography}

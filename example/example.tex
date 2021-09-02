@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\setlength\parindent{0pt}
+
+\title{Retrograde and anterograde linear models of pathological spread along directed structural connectomes}
+\author{Eli J. Cornblath}
+
+\begin{document}
+	
+\maketitle
+
+\section*{Introduction}
+
+Linear diffusion models are a highly promising tool for investigating the mechanisms of neurodegenerative disease progression, which is thought to be driven by transsynaptic spread throughout structural connectomes \cite{Raj2012,Pandya2017,Pandya2019,Henderson2019,Mezias2020}.
+
+There are two possible directions for transsynaptic spread. In retrograde spread, misfolded proteins travel backwards from distal axons towards the soma. In anterograde spread, the opposite process occurs-- misfolded proteins starting in the soma of a neuron travel down the axon to distal regions.\\
+
+In this brief document, I will describe the simple version of the model used in Ref. \cite{Henderson2019} to capture anterograde spread between to brain regions (equivalently, neurons or network nodes). Here, we use a matrix $W$ and the equation 
+
+\begin{equation}
+\dot{x}=Wx
+\label{eq1}
+\end{equation}
+to instantiate an anterograde spreading process whereby pathology in node $A$ spreads from neuron soma in $A$ along axons that terminate in node $B$. In our model
+
+\begin{equation}
+W= 
+\begin{bmatrix}
+W_{A\rightarrow A} & W_{B\rightarrow A}\\
+W_{A\rightarrow B} & 	W_{B\rightarrow B}
+\end{bmatrix},
+\label{eq2}
+\end{equation}
+where the element $W_{A\rightarrow B}$ indicates the strength of the axonal projections initiating from the somas in region $A$ and terminating in region $B$, and $	W_{A\rightarrow A} = 	W_{B\rightarrow B} = 0$. \\
+
+Suppose at the beginning of model time, we seed 1 unit of pathology in region $A$ and represent it in the vector $x$:
+\begin{equation}
+x = \begin{bmatrix}
+1 \\ 0
+\end{bmatrix}
+\label{eq3}
+\end{equation}
+
+\noindent The general form of equation \ref{eq1} is solved by the dot product between the $i$th row of $W$ and the columns of $x$ to generate $\dot{x}_i$, as in
+\begin{equation}
+\dot{x} = 
+\begin{bmatrix}
+W_{1,1} & W_{1,2} \\
+W_{2,1} & W_{2,2}
+\end{bmatrix}
+\begin{bmatrix}
+x_{1,1} \\
+x_{2,1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+W_{1,1}x_{1,1} + W_{1,2}x_{2,1} \\
+W_{2,1}x_{1,1} + W_{2,2}x_{2,1}
+\end{bmatrix}.
+\label{eq4}
+\end{equation}
+
+\noindent We can substitute in our values into equation \ref{eq4} and solve for $\dot{x}$, which yields
+
+\begin{equation}
+\dot{x}=
+\begin{bmatrix}
+W_{A\rightarrow A} & W_{B\rightarrow A}\\
+W_{A\rightarrow B} & 	W_{B\rightarrow B}
+\end{bmatrix}
+\begin{bmatrix}
+1 \\ 0
+\end{bmatrix}
+\label{eq5}
+\end{equation}
+\begin{equation}
+=
+\begin{bmatrix}
+(1\times W_{A\rightarrow A}) + (0\times W_{B\rightarrow A}) \\
+(1\times W_{A\rightarrow B}) + (0\times W_{B\rightarrow B})
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+W_{A\rightarrow B}
+\end{bmatrix} .
+\label{eq6}
+\end{equation}
+
+In this equation, we now observe that pathology in node $B$, represented by $x_{2,1}$, will change over time at a rate determined by the strength of axonal projections from neuron somas in $A$ terminating in $B$, which are reflected in $W_{A\rightarrow B}$. This process reflects anterograde spread as intended through the design of $W$ in equation \ref{eq2}, and as we implemented in Ref. \cite{Henderson2019}. \\
+
+Note that in equation \ref{eq1}, we define $\dot{x}$, which is the rate of change of pathology at each node. However, it is often more intuitive to solve for the amount of pathology at each node, represented by the vector $x$. Integration of equation \ref{eq1} yields
+
+\begin{equation}
+x=e^{Wt}x_o
+\end{equation}
+
+where $x_o$ is the initial state of $x$, and $e$ is the natural exponent.
+\section*{Acknowledgments}
+
+I would like to thank Jason Z. Kim for his input on this document.
+
+\bibliographystyle{plain}
+\bibliography{\string ~/Dropbox/Cornblath_Bassett_Projects/library.bib}
+\end{document}
