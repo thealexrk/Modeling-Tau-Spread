@@ -1,5 +1,5 @@
 # Modeling-Tau-Spread
-Identifying neuron-specific signatures in the chromosomal connectome associated with schizophrenia risk.
+Applying quantitative pathology and network analysis to predict spatiotemporal tau pathology patterns.
 
 Check out the accompanying article here: [Pending]
 
