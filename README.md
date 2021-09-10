@@ -1,7 +1,7 @@
 # Modeling-Tau-Spread
 Applying quantitative pathology and network analysis to predict spatiotemporal tau pathology patterns.
 
-Check out the accompanying article here: [Pending]
+Check out the accompanying article here: https://thealexk.medium.com/taupath-modeling-tau-spread-38a732dead13
 
 NB: This project is inspired by the following paper, the authors of which I owe a debt of gratitude for providing the code and data files I used:
 
